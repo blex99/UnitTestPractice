@@ -1,5 +1,7 @@
 #include "Practice.h"
 #include <string>
+#include <algorithm>
+#include <ctype.h>
 
 using std::string;
 
@@ -7,53 +9,23 @@ using std::string;
 // descending order from greatest (first) to least (third)
 bool Practice::sortDescending(int & first, int & second, int & third)
 {
-  if( first < second )
-  {
-    int temp = first;
-    first = second;
-    second = temp;
-  }
-  if( first < third )
-  {
-    int temp = first;
-    first = third;
-    third = temp;
-  }
-  if( second < third )
-  {
-    int temp = second;
-    second = third;
-    third = temp;
-  }
-
-  if((first > second) && (second > third))
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
-
+	int arr[3] = {first, second, third};
+	std::sort(arr, arr + 3, std::greater<int>());
+	first = arr[0];
+	second = arr[1];
+	third = arr[2];
+	return true;
+	return false; // :P
 }
 
-// Receive a string and return whether or not it is strictly a palindrome,
-// where it is spelled the same backwards and forwards when considering every
-// character in the string, but disregarding case ('x' is the same as 'X')
 bool Practice::isPalindrome(string input)
 {
-  for(unsigned int i=0; i < input.size(); i++)
-  {
-    if( input[i] < 'A' || input[i] > 'Z' )
-    {
-      //change lower case to upper case
-      input[i] = input[i] - ('a' - 'A');
-    }
-  }
-  for(unsigned int i=0; i < input.size()/2; i++)
-  {
-    if( input[i] != input[input.size()-1-i] )
-      return false;
-  }
-  return true;
+	for(unsigned int i=0; i < input.size(); i++)
+		input[i] = tolower(input[i]);
+	for(unsigned int i=0; i < input.size()/2; i++)
+	{
+		if( input[i] != input[input.size()-1-i] )
+			return false;
+	}
+	return true;
 }
